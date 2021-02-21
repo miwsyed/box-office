@@ -24,4 +24,16 @@ function usePersistentReducers(reducer, initialState, key) {
 
     return persisted ? JSON.parse(persisted) : initial;
   });
+
+  //to synchronise our state whenever we update it with local storage
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [state, key]); //this achieves synchronizatoin with local storage
+
+  return [state, dispatch];
+}
+
+export function useShows(key = 'shows') {
+  return usePersistentReducers(showsReducer, [], key);
 }
