@@ -8,8 +8,6 @@ function showsReducer(prevState, action) {
     }
 
     case 'REMOVE': {
-      //filter our current state
-
       return prevState.filter(showId => showId !== action.showId);
     }
 
@@ -18,25 +16,22 @@ function showsReducer(prevState, action) {
   }
 }
 
-function usePersistentReducers(reducer, initialState, key) {
+function usePersistedReducer(reducer, initialState, key) {
   const [state, dispatch] = useReducer(reducer, initialState, initial => {
-    //to read from local storage
     const persisted = localStorage.getItem(key);
 
     return persisted ? JSON.parse(persisted) : initial;
   });
 
-  //to synchronise our state whenever we update it with local storage
-
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(state));
-  }, [state, key]); //this achieves synchronizatoin with local storage
+  }, [state, key]);
 
   return [state, dispatch];
 }
 
 export function useShows(key = 'shows') {
-  return usePersistentReducers(showsReducer, [], key);
+  return usePersistedReducer(showsReducer, [], key);
 }
 
 export function useLastQuery(key = 'lastQuery') {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { LinkStyled, NavList } from './Navs.styled';
+
+import { NavList, LinkStyled } from './Navs.styled';
 
 const LINKS = [
   { to: '/', text: 'Home' },
